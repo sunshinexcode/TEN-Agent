@@ -21,7 +21,7 @@ from ten import (
 )
 from .log import logger
 
-MAX_SIZE = 1024  # 1 KB limit
+MAX_SIZE = 600  # 1 KB limit
 OVERHEAD_ESTIMATE = 200  # Estimate for the overhead of metadata in the JSON
 
 CMD_NAME_FLUSH = "flush"
@@ -139,6 +139,7 @@ class MessageCollectorExtension(Extension):
             # Check if the text + metadata exceeds 1 KB (1024 bytes)
             text_bytes = text.encode('utf-8')
             if len(text_bytes) + OVERHEAD_ESTIMATE <= MAX_SIZE:
+                logger.info(f"Sending text directly {len(text_bytes)}")
                 # If it's within the limit, send it directly
                 base_msg_data["text"] = text
                 msg_data = json.dumps(base_msg_data)
