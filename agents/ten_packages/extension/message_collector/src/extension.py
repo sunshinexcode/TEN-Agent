@@ -5,6 +5,7 @@
 # Copyright (c) 2024 Agora IO. All rights reserved.
 #
 #
+from base64 import b64encode
 import json
 import time
 import uuid
@@ -145,6 +146,7 @@ class MessageCollectorExtension(Extension):
                 ten_data.set_property_buf("data", msg_data.encode())
                 ten_env.send_data(ten_data)
             else:
+                text_bytes = b64encode(text_bytes)
                 # Split the text into smaller chunks
                 max_text_size = MAX_SIZE - OVERHEAD_ESTIMATE
                 total_length = len(text_bytes)
